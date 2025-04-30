@@ -1,1 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-backend
+  labels:
+    app: node-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: node-backend
+  template:
+    metadata:
+      labels:
+        app: node-backend
+    spec:
+      containers:
+      - name: node-backend
+        image: <your-docker-registry>/node-backend:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: MONGODB_URI
+          value: mongodb://mongodb:27017/mydatabase
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-backend-service
+spec:
+  type: ClusterIP
+  selector:
+    app: node-backend
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
 
