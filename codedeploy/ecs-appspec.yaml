@@ -1,0 +1,10 @@
+version: 1
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: "arn:aws:ecs:us-east-1:123456789012:task-definition/webapp-task:1"
+        LoadBalancerInfo:
+          ContainerName: "react-frontend"
+          ContainerPort: 80
+        PlatformVersion: "LATEST"
